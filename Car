@@ -1,0 +1,85 @@
+import java.awt.*;
+
+public abstract class Car implements Moveable{
+
+    private Position position; //vill man ha det i subklass för att kunna ha olika startpositioner
+    private int direction;
+    private int nrDoors; //
+    private double enginePower;
+    private double currentSpeed;
+    private Color color;
+    private String modelName; // The car model name. Perhaps a variable that is not needed?
+
+    public Car(int nrDoors, double enginePower, Color color, String modelName){
+        position = new Position(0,0);
+        direction = 0;
+        this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+        stopEngine();
+
+    }
+    public int getNrDoors(){
+        return nrDoors;
+    }
+    public double getEnginePower(){
+        return enginePower;
+    }
+
+    public double getCurrentSpeed(){
+        return currentSpeed;
+    }
+
+    public Color getColor(){
+        return color;
+    }
+
+    public String getModelName(){
+        return modelName; // Är det en onödig metod?
+    }
+    public void setColor(Color clr){ //används denna? private
+        color = clr;
+    }
+
+    protected void setCurrentSpeed(double newSpeed){
+        currentSpeed = newSpeed;
+    }
+    public void startEngine(){
+        currentSpeed = 0.1;
+    }
+
+    private void stopEngine(){ // användaren bör inte komma åt metoden
+        currentSpeed = 0;
+    }
+
+    public abstract double speedFactor(); // Ska man ta med parameter redan i superklassen?
+
+    public abstract void incrementSpeed(double amount); // Om gas används mot användaren bör incrementspeed
+
+    public abstract void decrementSpeed(double amount); // och decrement speed vara private
+
+    public void move() {
+        if(direction == 0) {
+            position.setY(position.getY() + currentSpeed);
+        } else if(direction == 1) {
+            position.setX(position.getX() + currentSpeed);
+        } else if(direction == 2) {
+            position.setY(position.getY() - currentSpeed);
+        } else if(direction == 3) {
+            position.setX(position.getX() - currentSpeed);
+        } else {
+            throw new RuntimeException("Car direction is out of permitted range");
+        }
+    }
+
+    public void turnLeft(){
+        direction = (direction + 1) % 4;
+    }
+    public void turnRight(){
+        direction = (direction + 1) % 4;
+    }
+
+
+
+}

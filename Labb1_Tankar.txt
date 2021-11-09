@@ -1,0 +1,1 @@
+Implementationsarv(Extends) vs specifikationsarv (Implements)
